@@ -1,0 +1,23 @@
+<div class="flex-container nav">
+      <div class="header">
+            <h3 class="section-header">Web Chat</h3>
+      </div>
+      <div class=" chat-body">
+      <p class="section-header">Channels ({{sidebarCtrl.channels.length}})</p>
+    <ul class="sidebar-nav">
+        <li ng-repeat="channelName in sidebarCtrl.channels" ng-class="{'active' : sidebarCtrl.isActive(channelName)}"><a href="" ng-click="sidebarCtrl.toggleChannel(channelName, true)">{{channelName | channel }}</a></li>
+    </ul>
+    <p class="section-header">Users</p>
+    <ul class="sidebar-nav">
+          <li ng-repeat="user in sidebarCtrl.users" ng-class="{'active' : sidebarCtrl.isActive(user.name)}">
+             <a  href="" ng-click="sidebarCtrl.toggleChannel(user, false)">{{user.name}} {{activeConversation.unreadCount}}</a>
+          </li>
+    </ul>
+    </div>
+    <div class="footer">
+          <div class="account-info">
+          <p><strong>{{sidebarCtrl.currentUser.name}}</strong></p>
+          <p>Available</p>
+    </div>
+    </div>
+</div>

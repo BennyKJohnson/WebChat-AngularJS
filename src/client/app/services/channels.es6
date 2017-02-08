@@ -3,11 +3,14 @@ class Channels {
       constructor(Users) {
             this.presetChannels = ['general'];
             this.channels = {};
+            // active channel store info about the current
             this.activeChannel = {};
-            this.Users = Users;
-            this.data = {channel: {}};
             this.activeChannels = [];
-
+            this.Users = Users;
+            // TODO Improve binding implementation
+            // Used for binding the active channel
+            this.data = {channel: {}};
+            // create and add channels for all preset channels
             this.addChannelsWithNames(this.presetChannels);
       }
 
@@ -27,6 +30,7 @@ class Channels {
 
       updateActiveChannel() {
             this.data.channel = this.channels[this.activeChannel.id];
+            // If channel exists, mark it as read
             if(this.channels[this.activeChannel.id]) {
                   this.channels[this.activeChannel.id].markAsRead();
             }
@@ -68,6 +72,7 @@ class Channels {
             this.activeChannels.push(this.channels[channel.id]);
       }
 
+      // Removes a specific channel with channel id
       removeChannelWithID(channelID) {
             // Remove from hash
             delete this.channels[channelID];
@@ -79,6 +84,7 @@ class Channels {
                   }
             }
       }
+
       /**
        Adds a message to channel with ID
        If no channelID is provided, default to activeChannel

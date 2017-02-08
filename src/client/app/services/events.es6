@@ -17,6 +17,7 @@ class Events {
             this.getExistingActiveUsers();
       }
 
+      // Register callbacks for all the socket events emitted from the server
       registerSocketEvents() {
             const self = this;
             const socket = this.socket;
@@ -142,15 +143,18 @@ class Events {
             this.showNotification(leftMessage);
       }
 
+      // Called when server sends user started typing message
       userStartedTyping(data) {
             const name = data.user.name;
             this.Channels.channels[data.channel].status = `${name} is typing...`;
       };
 
+      // Called when server sends user stopped typing message
       userStoppedTyping(data) {
             this.Channels.channels[data.channel].status = '';
       };
 }
-//export Notifications;
+
+
 angular.module('WebChat').service('Events', Events);
 Events.$inject = ['Users', 'socket', '$http', 'SocketEvent','Notifications', 'Channels'];

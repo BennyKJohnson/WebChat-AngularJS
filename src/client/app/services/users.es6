@@ -10,6 +10,7 @@ class Users {
             this.hasDownloadUsers = false;
       }
 
+      // generates random ID for a username
       randomID(length) {
             // If length not present, then use default length
             length = length || 5;

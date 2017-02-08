@@ -1,7 +1,6 @@
 class Message {
 
       constructor(text, user, createdAt) {
-
             this.text = text;
             this.user = user;
             if(createdAt === undefined) {

@@ -30,7 +30,7 @@ module.exports = function(config) {
           './src/client/app/models/DMChannel-compiled.js',
           // services
           './src/client/app/services/socketEvents.js',
-          './src/client/app/services/notifications.js',
+          './src/client/app/services/notifications-compiled.js',
           './src/client/app/services/events-compiled.js',
           './src/client/app/services/users-compiled.js',
           './src/client/app/login/loginController-compiled.js',

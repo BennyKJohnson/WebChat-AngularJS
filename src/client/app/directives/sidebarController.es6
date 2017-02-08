@@ -11,12 +11,15 @@ class SidebarController {
             this.users = Users.activeUsers;
       }
 
+      // Checks if the channel is currently active
       isActive(channel) {
             return this.activeChannel.id === channel.id;
       }
 
+      // Sets the channel to active
       toggleChannel(channel) {
             this.Channels.setChannelForChannelID(channel.id);
+            // TODO Fix binding in activeChannel
             this.activeChannel = this.Channels.activeChannel;
       }
 }

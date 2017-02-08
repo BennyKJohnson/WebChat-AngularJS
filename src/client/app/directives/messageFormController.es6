@@ -1,3 +1,4 @@
+
 class MessageFormController {
 
       constructor($http, Events, Channels) {
@@ -11,13 +12,15 @@ class MessageFormController {
             this.lastTypingTime = 0;
       }
 
+      // descriptive getter for _typing
       get isTyping() {
             return this._typing;
       }
 
+      // Set isTyping to new state if not already at the new state. In addition to notifying events
       set isTyping(newState) {
             // Check that the desired new state is different from old
-            if(this.isTyping != newState) {
+            if(this.isTyping !== newState) {
                   // Set new state
                   this._typing = newState;
                   // Send notification
@@ -49,19 +52,24 @@ class MessageFormController {
             }
       }
 
+      // Periodically checks whether has reached typing timeout, if so set isTyping to false
+      checkTyping() {
+            const self = this;
 
+            const typingTimer = (new Date()).getTime();
+            const duration = typingTimer - self.lastTypingTime;
+            if (self.didReachTypingTimeout(duration, self.typingTimeout, self.isTyping)) {
+                  self.isTyping = false;
+            }
+      }
+
+      // Called when the text box value changes
       textBoxDidUpdate() {
+            // user is typing because the value of the textbox just changed
             this.isTyping = true;
             this.lastTypingTime = (new Date()).getTime();
             // Create Timer event
-            const self = this;
-            setTimeout(function () {
-                  const typingTimer = (new Date()).getTime();
-                  const duration = typingTimer - self.lastTypingTime;
-                  if (self.didReachTypingTimeout(duration, self.typingTimeout, self.isTyping)) {
-                        self.isTyping = false;
-                  }
-            }, self.typingTimeout);
+            setTimeout(() => {this.checkTyping()}, this.typingTimeout);
       }
 }
 

@@ -62,6 +62,7 @@ function isDMChannel(channelID) {
       return channelID.match(dmChannelRegex);
 }
 
+// Removes user from server by deleting from users and socket collection
 function removeUserForSocket(socket) {
       deleteUserWithUsername(socket.username);
       delete socketsByUsername[socket.username];
@@ -74,6 +75,7 @@ function removeUserForSocket(socket) {
       });
 }
 
+// Caculates the dm channelID for two usernames
 function getConversationID(sender, recipient) {
       // Order in alpha order
       if(sender < recipient) {
@@ -90,7 +92,7 @@ io.on('connection', function (socket) {
   socket.on('new message', function (data) {
         console.log('New message channel:' + data.channel);
        // TODO Improve security by implemented broadcasting to specific rooms
-             // we tell the client to execute 'new message'
+       // tell the client to execute 'new message'
              socket.broadcast.emit('new message', {
                user: {name: socket.username},
                message: data.message,

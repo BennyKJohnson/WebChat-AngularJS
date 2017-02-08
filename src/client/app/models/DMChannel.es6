@@ -1,7 +1,6 @@
 class DMChannel extends Channel {
 
       constructor(currentUser, user) {
-
             // Calculate channel ID
             // Don't like repeating myself, but can't call static methood from constructor
             const username1 = currentUser.name;

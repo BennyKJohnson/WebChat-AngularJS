@@ -57,9 +57,7 @@ class Events {
                   self.hasDownloadUsers = true;
                   const currentUsername = self.Users.getUser().name;
                   // Remove current user from list
-                  users = users.filter(function(user) {
-                        return user.name != currentUsername;
-                  });
+                  users = users.filter(user => user.name != currentUsername);
                   // Create a DMChannel for each user
                   self.Channels.addDMChannelsForUsers(users);
             });
@@ -111,6 +109,7 @@ class Events {
             this.Notifications.send(text);
       }
 
+      // Called when user has joined
       userJoined(data) {
             console.log(data.username + ' joined');
             // Append to active users if not current user
@@ -136,7 +135,7 @@ class Events {
             // Remove user
             this.Users.removeUserWithUsername(data.username);
             // Remove channel
-            const dmChannelID = DMChannel.idForUsernames(this.Users.getUser().name , data.username);
+            const dmChannelID = DMChannel.idForUsernames(this.Users.user.name , data.username);
             this.Channels.removeChannelWithID(dmChannelID);
             // Send notification
             const leftMessage = data.username + ' left';
@@ -144,7 +143,8 @@ class Events {
       }
 
       userStartedTyping(data) {
-            this.Channels.channels[data.channel].status =  data.user.name + ' is typing...';
+            const name = data.user.name;
+            this.Channels.channels[data.channel].status = `${name} is typing...`;
       };
 
       userStoppedTyping(data) {

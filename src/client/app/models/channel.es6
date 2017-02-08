@@ -1,15 +1,11 @@
 // A channel object contains information about a chat room and it's messages
 class Channel {
 
-      constructor(id, name) {
+      // If no name is provided use the channel id
+      constructor(id, name = id) {
             this.id = id;
-            // Check if a name has been provided
-            if(!name) {
-                  // If not set name to id
-                  name = id;
-            }
-
             this.name = name;
+
             if(name === 'general') {
                   this.isGeneral = true;
             }
@@ -27,10 +23,12 @@ class Channel {
             };
       }
 
+      // Checks if channel is public to all users
       get isChannel() {
             return this.type == Channel.types().CHANNEL;
       };
 
+      // Checks if channel is a private channel (direct message betwen users)
       get isDM() {
             return this.type == Channel.types().DM;
       };
@@ -52,6 +50,7 @@ class Channel {
             return this.unreadCount > 0;
       }
 
+      // Resets the unread count
       markAsRead() {
             this.unreadCount = 0;
       }

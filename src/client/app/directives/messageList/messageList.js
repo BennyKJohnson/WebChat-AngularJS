@@ -3,7 +3,7 @@
       return {
             restrict: 'E',
             replace: true,
-            templateUrl: 'app/directives/messageList.html',
+            templateUrl: 'app/directives/messageList/messageList.html',
             controller: function($http, Channels) {
                   this.channel = Channels.data;
             },

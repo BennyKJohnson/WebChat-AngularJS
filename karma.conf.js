@@ -34,7 +34,7 @@ module.exports = function(config) {
           './src/client/app/services/events-compiled.js',
           './src/client/app/services/users-compiled.js',
           './src/client/app/login/loginController-compiled.js',
-          './src/client/app/directives/MessageFormController-compiled.js',
+          './src/client/app/directives/messageForm/MessageFormController-compiled.js',
 
            './src/client/app/services/channels-compiled.js',
            './src/client/app/filters/*.js',

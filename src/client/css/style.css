@@ -12,6 +12,10 @@ body {
   border: 0;
 }
 
+.bold {
+      font-weight: bold;
+}
+
 .flex-container {
       display: flex;
       flex-direction: column;

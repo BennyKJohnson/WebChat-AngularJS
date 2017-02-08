@@ -5,22 +5,18 @@ class SidebarController {
             this.Channels = Channels;
 
             // Setup properties
-            this.channels = Channels.presetChannels;
+            this.channels = Channels.activeChannels;
             this.currentUser = Users.getUser();
             this.activeChannel = Channels.activeChannel;
             this.users = Users.activeUsers;
       }
 
       isActive(channel) {
-            return this.activeChannel.name === channel;
+            return this.activeChannel.id === channel.id;
       }
 
-      toggleChannel(channel, isChannel) {
-            if(isChannel) {
-                  this.Channels.setChannelForChannelID(channel);
-            } else {
-                  this.Channels.setChannelForUsername(channel.name);
-            }
+      toggleChannel(channel) {
+            this.Channels.setChannelForChannelID(channel.id);
             this.activeChannel = this.Channels.activeChannel;
       }
 }

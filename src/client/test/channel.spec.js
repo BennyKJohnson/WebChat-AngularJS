@@ -35,8 +35,6 @@ describe("Channel", function() {
             // Check that message has been added
             expect(channel.messages).toContain(message);
 
-            // Check that unread has been incrumented
-            expect(channel.unreadCount).toEqual(originalUnread + 1);
       });
 
       it('should return empty string if not status is present', function() {

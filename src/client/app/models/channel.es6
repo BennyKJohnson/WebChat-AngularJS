@@ -38,7 +38,6 @@ class Channel {
       // Adds a message to the messages array
       addMessage(message) {
             this.messages.push(message);
-            this.unreadCount++;
       }
 
       get conversationStatus() {
@@ -47,6 +46,10 @@ class Channel {
             } else {
                   return '';
             }
+      }
+
+      get hasUnreadMessage() {
+            return this.unreadCount > 0;
       }
 
       markAsRead() {

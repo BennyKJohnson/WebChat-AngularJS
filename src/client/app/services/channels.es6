@@ -6,6 +6,7 @@ class Channels {
             this.activeChannel = {};
             this.Users = Users;
             this.data = {channel: {}};
+            this.activeChannels = [];
 
             this.addChannelsWithNames(this.presetChannels);
       }
@@ -20,15 +21,27 @@ class Channels {
             }
       }
 
+       allChannels() {
+            // Map hash into array
+            return Object.keys(this.channels).map(key => this.channels[key]);
+      }
+
       // Checks whether a channel with id exists in hash
       hasChannelWithID(id) {
             return this.channels.hasOwnProperty(id);
       }
 
+      updateActiveChannel() {
+            this.data.channel = this.channels[this.activeChannel.id];
+            if(this.channels[this.activeChannel.id]) {
+                  this.channels[this.activeChannel.id].markAsRead();
+            }
+      }
+
       // Sets current active channel to channel with channelID
       setChannelForChannelID(channelID) {
             this.activeChannel = {name: channelID, type: 'channel', id: channelID};
-            this.data.channel = this.channels[channelID];
+            this.updateActiveChannel();
       }
 
       // Sets active channel as a DM for user with usernane
@@ -37,8 +50,7 @@ class Channels {
                   name: username,
                   id: DMChannel.idForUsernames(this.Users.getUser().name, username)
             };
-            this.data.channel = this.channels[this.activeChannel.id];
-
+            this.updateActiveChannel();
       }
 
       // Convenience function to create a direct message channel
@@ -59,6 +71,19 @@ class Channels {
       // Adds a channel to hash channels
       addChannel(channel) {
             this.channels[channel.id] = channel;
+            this.activeChannels.push(this.channels[channel.id]);
+      }
+
+      removeChannelWithID(channelID) {
+            // Remove from hash
+            delete this.channels[channelID];
+            // Remove channel from array
+            for(var i = 0; i < this.activeChannels.length; i++) {
+                  if(this.activeChannels[i].id == channelID) {
+                        this.activeChannels.splice(i, 1);
+                        break;
+                  }
+            }
       }
 
       // Adds a message to channel with ID
@@ -69,6 +94,10 @@ class Channels {
             }
 
             this.channels[channelID].addMessage(message);
+            if(this.activeChannel.id != channelID) {
+                  // Update unreadCount
+                  this.channels[channelID].unreadCount++;
+            }
       }
 
 }

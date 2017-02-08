@@ -14,7 +14,8 @@
                         return Gravatar(username);
                   } else {
                         // Generate Identicon
-                        var data = new Identicon(username, 250).toString();
+                        var hash = CryptoJS.MD5(username).toString(CryptoJS.enc.Base64);
+                        var data = new Identicon(hash, 250).toString();
                         return 'data:image/png;base64,' + data;
                   }
             };

@@ -55,7 +55,11 @@ class Events {
                   // self.removeUserWithUsername(user.name, users);
                   self.activeUsers = users;
                   self.hasDownloadUsers = true;
-
+                  const currentUsername = self.Users.getUser().name;
+                  // Remove current user from list
+                  users = users.filter(function(user) {
+                        return user.name != currentUsername;
+                  });
                   // Create a DMChannel for each user
                   self.Channels.addDMChannelsForUsers(users);
             });
@@ -131,6 +135,10 @@ class Events {
       userLeft(data) {
             // Remove user
             this.Users.removeUserWithUsername(data.username);
+            // Remove channel
+            const dmChannelID = DMChannel.idForUsernames(this.Users.getUser().name , data.username);
+            this.Channels.removeChannelWithID(dmChannelID);
+            // Send notification
             const leftMessage = data.username + ' left';
             this.showNotification(leftMessage);
       }

@@ -93,7 +93,7 @@ class Channels {
             this.channels[channelID].addMessage(message);
             if(this.activeChannel.id !== channelID) {
                   // Update unreadCount
-                  this.channels[channelID].unreadCount++;
+                  this.channels[channelID].unreadCount += 1;
             }
       }
 

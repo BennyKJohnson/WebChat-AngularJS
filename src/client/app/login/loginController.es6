@@ -34,7 +34,7 @@ class LoginController {
             if(shouldGenerateUsername) {
                   this.attemptToLogin(this.Users.randomID());
             } else {
-                  var username = this.username;
+                  const username = this.username;
                   this.attemptToLogin(username);
             }
       }

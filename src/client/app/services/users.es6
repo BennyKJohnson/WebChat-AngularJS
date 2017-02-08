@@ -67,10 +67,9 @@ class Users {
             return this.user;
       }
 
-      setUser(username) {
-            username = username || this.randomID()
+      // Sets current user and send new user message to server
+      setUser(username = this.randomID()) {
             this.user = new User(username);
-
             this.socket.emit('add user', username);
       }
 }

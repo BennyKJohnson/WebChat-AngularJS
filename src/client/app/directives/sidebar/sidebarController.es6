@@ -1,28 +1,33 @@
 class SidebarController {
 
-      constructor(Channels, Users) {
+      constructor(Channels, Users, $scope) {
             this.Events = Events;
             this.Channels = Channels;
 
             // Setup properties
-            this.channels = Channels.activeChannels;
+            this.channels = Channels.channelCollection;
             this.currentUser = Users.getUser();
-            this.activeChannel = Channels.activeChannel;
             this.users = Users.activeUsers;
-      }
 
+            // Setup watch on active channel
+            const vm = this;
+            vm.currentChannel = Channels.activeChannel;
+            $scope.$watch(function() {
+                  return Channels.activeChannel;
+            }, function() {
+                  vm.currentChannel = Channels.activeChannel;
+            });
+      }
       // Checks if the channel is currently active
       isActive(channel) {
-            return this.activeChannel.id === channel.id;
+            return this.currentChannel.id === channel.id;
       }
 
       // Sets the channel to active
       toggleChannel(channel) {
             this.Channels.setChannelForChannelID(channel.id);
-            // TODO Fix binding in activeChannel
-            this.activeChannel = this.Channels.activeChannel;
       }
 }
 
 angular.module('WebChat').controller( 'SidebarController', SidebarController);
-SidebarController.$inject = ['Channels', 'Users'];
+SidebarController.$inject = ['Channels', 'Users', '$scope'];

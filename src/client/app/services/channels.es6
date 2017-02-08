@@ -2,14 +2,12 @@ class Channels {
 
       constructor(Users) {
             this.presetChannels = ['general'];
-            this.channels = {};
-            // active channel store info about the current
+            // currently active channel, this will be a reference to an object in channels
             this.activeChannel = {};
-            this.activeChannels = [];
+
+            this.channels = {};
+            this.channelCollection = [];
             this.Users = Users;
-            // TODO Improve binding implementation
-            // Used for binding the active channel
-            this.data = {channel: {}};
             // create and add channels for all preset channels
             this.addChannelsWithNames(this.presetChannels);
       }
@@ -28,27 +26,12 @@ class Channels {
             return this.channels.hasOwnProperty(id);
       }
 
-      updateActiveChannel() {
-            this.data.channel = this.channels[this.activeChannel.id];
-            // If channel exists, mark it as read
-            if(this.channels[this.activeChannel.id]) {
-                  this.channels[this.activeChannel.id].markAsRead();
-            }
-      }
-
       // Sets current active channel to channel with channelID
       setChannelForChannelID(channelID) {
-            this.activeChannel = {name: channelID, type: 'channel', id: channelID};
-            this.updateActiveChannel();
-      }
-
-      // Sets active channel as a DM for user with usernane
-      setChannelForUsername(username) {
-            this.activeChannel = {
-                  name: username,
-                  id: DMChannel.idForUsernames(this.Users.getUser().name, username)
-            };
-            this.updateActiveChannel();
+            this.activeChannel = this.channels[channelID];
+            if(this.activeChannel) {
+                  this.activeChannel.markAsRead();
+            }
       }
 
       // Convenience function to create a direct message channel
@@ -69,7 +52,7 @@ class Channels {
       // Adds a channel to hash channels
       addChannel(channel) {
             this.channels[channel.id] = channel;
-            this.activeChannels.push(this.channels[channel.id]);
+            this.channelCollection.push(this.channels[channel.id]);
       }
 
       // Removes a specific channel with channel id
@@ -77,9 +60,9 @@ class Channels {
             // Remove from hash
             delete this.channels[channelID];
             // Remove channel from array
-            for(var i = 0; i < this.activeChannels.length; i++) {
-                  if(this.activeChannels[i].id === channelID) {
-                        this.activeChannels.splice(i, 1);
+            for(var i = 0; i < this.channelCollection.length; i++) {
+                  if(this.channelCollection[i].id === channelID) {
+                        this.channelCollection.splice(i, 1);
                         break;
                   }
             }

@@ -30,25 +30,6 @@ describe('Channels Service', function() {
             expect(Channels.hasChannelWithID(channelID)).toBe(false);
        });
 
-       it('should set active channel for channelID', function() {
-             var channelID = 'my_channel_id';
-             var channel = {name: channelID, type: 'channel', id: channelID};
-             Channels.setChannelForChannelID(channelID);
-             expect(Channels.activeChannel).toEqual(channel);
-       });
-
-       it('should set active channel for username', function() {
-            var username = 'alex';
-            var channelID = DMChannel.idForUsernames(Users.getUser().name, username);
-            var activeChannel = {
-                  name: username,
-                  id: channelID
-            };
-
-            Channels.setChannelForUsername(username);
-            expect(Channels.activeChannel).toEqual(activeChannel);
-
-       });
 
        it('should create DMChannel for current user and other user', function() {
              var user = new User('alex');

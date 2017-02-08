@@ -1,5 +1,5 @@
 <div class="message-list">
-  <div ng-repeat="message in chatCtrl.data.channel.messages" class="message-item {{message.type}}">
+  <div ng-repeat="message in chatCtrl.channel.messages" class="message-item {{message.type}}">
     <avatar user="message.user" ng-if="message.isUserMessage"></avatar>
     <div class="message-container">
       <div class="meta">
